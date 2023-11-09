@@ -12,7 +12,7 @@ white←' '≠puzzle
 headx← 2</0, white
 heady←⍉2</0,⍉white
 Count←{⍵×(⍴⍵)⍴+\,⍵}
-no←Count headx∨heady
+number←Count headx∨heady
 nwhite←+/, white
 nblack←+/,~white
 nwordx←+/, headx
