@@ -22,3 +22,12 @@ points←⊃,/{(×nblack)↓⍵⊂⍤⊢⌸⍥,⍳⍴⍵}¨wordx wordy
 squarex←¯1+Count white
 squarey←¯1+white×1+nwhite+nblack-⍨{(⍴⍵)⍴⍋⍋,⍵}wordy
 point←(⍸white),{nblack↓(,⍳⍴⍵)[⍋,⍵]}squarey
+
+w ←∊{⌽1+⍳≢⍵}¨points
+ge←∊{-1+⍳≢⍵}¨points
+e ← 1⌽w
+b ←¯1⌽ge
+W ←{(⍵⊃w )Nav⍵}
+Ge←{(⍵⊃ge)Nav⍵}
+E ←{(⍵⊃e )Nav⍵}
+B ←{(⍵⊃b )Nav⍵}
