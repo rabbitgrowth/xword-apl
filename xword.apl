@@ -1,5 +1,7 @@
 ⎕IO←0
 
+∆←{0=⍵:⎕SIGNAL 8}
+
 puzzle←⍉⍪' RACED '
 puzzle⍪← 'BELARUS'
 puzzle⍪← 'LABTECH'
@@ -40,3 +42,7 @@ Nav←{(≢point)|⍺+⍵}
 Next← 1∘Nav
 Prev←¯1∘Nav
 Point←{(⍵≥nwhite)(⍵⊃point)}
+
+∆ dir pos≡Point      Square dir pos
+∆ 0 (0 2)≡Point Next Square dir pos
+∆ 1 (6 3)≡Point Prev Square dir pos
