@@ -31,3 +31,12 @@ W ←{(⍵⊃w )Nav⍵}
 Ge←{(⍵⊃ge)Nav⍵}
 E ←{(⍵⊃e )Nav⍵}
 B ←{(⍵⊃b )Nav⍵}
+
+pos←0 1
+dir←0
+
+Square←{⍵⌷⍺⊃squarex squarey}
+Nav←{(≢point)|⍺+⍵}
+Next← 1∘Nav
+Prev←¯1∘Nav
+Point←{(⍵⊃point)(⍵≥nwhite)}
