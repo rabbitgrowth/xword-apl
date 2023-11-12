@@ -35,8 +35,8 @@ Prev←¯1∘Nav
 Point←{(⍵≥nwhite)(⍵⊃point)}
 
 ∆ dir pos≡Point      Square dir pos
-∆ 0 (0 2)≡Point Next Square dir pos
-∆ 1 (6 3)≡Point Prev Square dir pos
+∆ 0(0 2) ≡Point Next Square dir pos
+∆ 1(6 3) ≡Point Prev Square dir pos
 
 w ←∊{⌽1+⍳≢⍵}¨points
 ge←∊{-1+⍳≢⍵}¨points
@@ -48,9 +48,9 @@ GE←ge∘Jump
 E ←e ∘Jump
 B ←b ∘Jump
 
-∆ 0 (2 0)≡W  0 (1 3)
-∆ 0 (0 5)≡GE 0 (1 3)
-∆ 0 (1 6)≡E  0 (1 3)
-∆ 0 (2 6)≡E  0 (1 6)
-∆ 0 (1 0)≡B  0 (1 3)
-∆ 0 (0 1)≡B  0 (1 0)
+∆ 0(2 0)≡W  0(1 3)
+∆ 0(0 5)≡GE 0(1 3)
+∆ 0(1 6)≡E  0(1 3)
+∆ 0(2 6)≡E  0(1 6)
+∆ 0(1 0)≡B  0(1 3)
+∆ 0(0 1)≡B  0(1 0)
