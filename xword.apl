@@ -32,11 +32,11 @@ Ge←{(⍵⊃ge)Nav⍵}
 E ←{(⍵⊃e )Nav⍵}
 B ←{(⍵⊃b )Nav⍵}
 
-pos←0 1
 dir←0
+pos←0 1
 
-Square←{⍵⌷⍺⊃squarex squarey}
+Square←{dir pos←⍵ ⋄ pos⌷dir⊃squarex squarey}
 Nav←{(≢point)|⍺+⍵}
 Next← 1∘Nav
 Prev←¯1∘Nav
-Point←{(⍵⊃point)(⍵≥nwhite)}
+Point←{(⍵≥nwhite)(⍵⊃point)}
