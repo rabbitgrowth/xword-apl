@@ -91,14 +91,13 @@ box⍪← '└  ┗   '
 box⍪← '┴  ┺┹┷ '
 box⍪← '┘   ┛  '
 
-Rect   ←{y x←⍵-1  ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
-Conform←{y x←  ⍴⍺ ⋄ y x↑⍵}
-Pad    ←{y x←1+⍴⍵ ⋄ y x↑⍵}
-Shift  ←{y x←-⍺   ⋄ y⊖x⌽⍵}
+Rect ←{y x←⍵-1  ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
+Pad  ←{y x←1+⍴⍵ ⋄ y x↑⍵}
+Shift←{y x←-⍺   ⋄ y⊖x⌽⍵}
 
 light←(⍳9)Rect⍴puzzle
 size←dir⌽1,≢points⊃⍨Word dir pos
-heavy←pos Shift light Conform 1 5 2 6 0 6 3 5 4 Rect size
+heavy←pos Shift(⍴light)↑1 5 2 6 0 6 3 5 4 Rect size
 vertex←(⊂box)⌷¨⍨light,¨heavy
 edgex←heavy{3↑(3⍴'─━'[2|⍺]),⍨(0=⍵)↓⍕⍵}¨Pad number
 edgey←'│┃'[heavy∊1 2 6]
