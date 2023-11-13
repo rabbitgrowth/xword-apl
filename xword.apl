@@ -28,6 +28,20 @@ point←(⍸white),{nblack↓(,⍳⍴⍵)[⍋,⍵]}squarey
 dir←0
 pos←0 1
 
+gg    ←  1-+⍀∨⍀ white
+g     ←⊖¯1++⍀∨⍀⊖white
+zero  ←  1-+\∨\ white
+dollar←⌽¯1++\∨\⌽white
+GG    ←{y x←⍵ ⋄ y+←⍵⌷gg     ⋄ y x}
+G     ←{y x←⍵ ⋄ y+←⍵⌷g      ⋄ y x}
+Zero  ←{y x←⍵ ⋄ x+←⍵⌷zero   ⋄ y x}
+Dollar←{y x←⍵ ⋄ x+←⍵⌷dollar ⋄ y x}
+
+∆ 1 0≡GG     3 0
+∆ 5 0≡G      3 0
+∆ 0 1≡Zero   0 3
+∆ 0 5≡Dollar 0 3
+
 Square←{dir pos←⍵ ⋄ pos⌷dir⊃squarex squarey}
 Nav←{(≢point)|⍺+⍵}
 Next← 1∘Nav
