@@ -53,6 +53,7 @@ Dollar←{y x←⍵ ⋄ x+←⍵⌷dollar ⋄ y x}
 ∆ 0 1≡Zero   0 3
 ∆ 0 5≡Dollar 0 3
 
+Word  ←{dir pos←⍵ ⋄ pos⌷dir⊃wordx   wordy}
 Square←{dir pos←⍵ ⋄ pos⌷dir⊃squarex squarey}
 Nav←{(≢point)|⍺+⍵}
 Next← 1∘Nav
@@ -79,3 +80,29 @@ B ←b ∘Jump
 ∆ 0(2 6)≡E  0(1 6)
 ∆ 0(1 0)≡B  0(1 3)
 ∆ 0(0 1)≡B  0(1 0)
+
+box←⍉⍪'┌┏     '
+box⍪← '┬┲┱  ┯ '
+box⍪← '┐ ┓    '
+box⍪← '├┢ ┡  ┠'
+box⍪← '┼╆╅╄╃┿╂'
+box⍪← '┤ ┪ ┩ ┨'
+box⍪← '└  ┗   '
+box⍪← '┴  ┺┹┷ '
+box⍪← '┘   ┛  '
+
+Rect   ←{y x←⍵-1  ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
+Conform←{y x←  ⍴⍺ ⋄ y↑x↑⍤1⊢⍵}
+Pad    ←{y x←1+⍴⍵ ⋄ y↑x↑⍤1⊢⍵}
+Shift  ←{y x←-⍺   ⋄ y⊖x⌽   ⍵}
+
+light←(⍳9)Rect⍴puzzle
+size←dir⌽1,≢points⊃⍨Word dir pos
+heavy←pos Shift light Conform 1 5 2 6 0 6 3 5 4 Rect size
+vertex←(⊂box)⌷¨⍨light,¨heavy
+edgex←heavy{3↑(3⍴'─━'[2|⍺]),⍨(0=⍵)↓⍕⍵}¨Pad number
+edgey←'│┃'[heavy∊1 2 6]
+face←3∘⍴¨'░ '[Pad white]
+grid←¯1↓¯3↓⍤1⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
+
+⎕←grid
