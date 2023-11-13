@@ -28,6 +28,17 @@ point←(⍸white),{nblack↓(,⍳⍴⍵)[⍋,⍵]}squarey
 dir←0
 pos←0 1
 
+Move←{3::⍵ ⋄ ⍺+⍣{⍺⌷white}⍵}
+H← 0 ¯1∘Move
+J← 1  0∘Move
+K←¯1  0∘Move
+L← 0  1∘Move
+
+∆ 1 2≡H 1 3
+∆ 4 3≡J 2 3
+∆ 1 0≡K 1 0
+∆ 3 6≡L 3 6
+
 gg    ←  1-+⍀∨⍀ white
 g     ←⊖¯1++⍀∨⍀⊖white
 zero  ←  1-+\∨\ white
