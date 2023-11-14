@@ -53,13 +53,13 @@ Dollar←{y x←⍵ ⋄ x+←⍵⌷dollar ⋄ y x}
 ∆ 0 1≡Zero   0 3
 ∆ 0 5≡Dollar 0 3
 
-Word  ←{dir pos←⍵ ⋄ pos⌷dir⊃wordx   wordy}   ⍝ word    ←   Word   dir pos
-Square←{dir pos←⍵ ⋄ pos⌷dir⊃squarex squarey} ⍝ square  ←   Square dir pos
-Nav←{(≢point)|⍺+⍵}                           ⍝ square  ← n Nav    square
-Next← 1∘Nav                                  ⍝ square  ←   Next   square
-Prev←¯1∘Nav                                  ⍝ square  ←   Prev   square
-Point←{(⍵≥nwhite)(⍵⊃point)}                  ⍝ dir pos ←   Point  square
-Points←{points⊃⍨Word ⍵}                      ⍝ points  ←   Points dir pos
+Word  ←{dir pos←⍵ ⋄ pos⌷dir⊃wordx   wordy}
+Square←{dir pos←⍵ ⋄ pos⌷dir⊃squarex squarey}
+Nav←{(≢point)|⍺+⍵}
+Next← 1∘Nav
+Prev←¯1∘Nav
+Point←{(⍵≥nwhite)(⍵⊃point)}
+Points←{points⊃⍨Word ⍵}
 
 ∆ dir pos≡Point      Square dir pos
 ∆ 0(0 2) ≡Point Next Square dir pos
