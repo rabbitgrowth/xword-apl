@@ -61,9 +61,9 @@ Prev←¯1∘Nav
 Point←{(⍵≥nwhite)(⍵⊃point)}
 Points←points⊃⍨Word
 
-∆ dir pos≡Point      Square dir pos
-∆ 0(0 2) ≡Point Next Square dir pos
-∆ 1(6 3) ≡Point Prev Square dir pos
+∆ 0(0 1)≡Point      Square 0(0 1)
+∆ 0(0 2)≡Point Next Square 0(0 1)
+∆ 1(6 3)≡Point Prev Square 0(0 1)
 
 w ←∊{⌽1+⍳≢⍵}¨points
 ge←∊{-1+⍳≢⍵}¨points
