@@ -91,12 +91,12 @@ box⍪← '└  ┗   '
 box⍪← '┴  ┺┹┷ '
 box⍪← '┘   ┛  '
 
-Rect ←{y x←⍵-1 ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
-Shift←{y x←-⍺  ⋄ y⊖x⌽⍵}
+Rect←{y x←⍵-1 ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
 light←(⍳9)Rect⍴puzzle
 shape←⍴light
-size←dir⌽1,≢points⊃⍨Word dir pos
-heavy←pos Shift shape↑1 5 2 6 0 6 3 5 4Rect size
+rect←1 5 2 6 0 6 3 5 4 Rect dir⌽1,≢points⊃⍨Word dir pos
+dy dx←-pos
+heavy←dy⊖dx⌽shape↑rect
 vertex←(⊂box)⌷¨⍨light,¨heavy
 edgex←heavy{3↑(3⍴'─━'[2|⍺]),⍨(0=⍵)↓⍕⍵}¨shape↑number
 edgey←'│┃'[heavy∊1 2 6]
