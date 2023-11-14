@@ -53,11 +53,13 @@ Dollar←{y x←⍵ ⋄ x+←⍵⌷dollar ⋄ y x}
 ∆ 0 1≡Zero   0 3
 ∆ 0 5≡Dollar 0 3
 
-Square←{dir pos←⍵ ⋄ pos⌷dir⊃squarex squarey}
-Nav←{(≢point)|⍺+⍵}
-Next← 1∘Nav
-Prev←¯1∘Nav
-Point←{(⍵≥nwhite)(⍵⊃point)}
+Word  ←{dir pos←⍵ ⋄ pos⌷dir⊃wordx   wordy}   ⍝ word    ←   Word   dir pos
+Square←{dir pos←⍵ ⋄ pos⌷dir⊃squarex squarey} ⍝ square  ←   Square dir pos
+Nav←{(≢point)|⍺+⍵}                           ⍝ square  ← n Nav    square
+Next← 1∘Nav                                  ⍝ square  ←   Next   square
+Prev←¯1∘Nav                                  ⍝ square  ←   Prev   square
+Point←{(⍵≥nwhite)(⍵⊃point)}                  ⍝ dir pos ←   Point  square
+Points←{points⊃⍨Word ⍵}                      ⍝ points  ←   Points dir pos
 
 ∆ dir pos≡Point      Square dir pos
 ∆ 0(0 2) ≡Point Next Square dir pos
@@ -79,3 +81,28 @@ B ←b ∘Jump
 ∆ 0(2 6)≡E  0(1 6)
 ∆ 0(1 0)≡B  0(1 3)
 ∆ 0(0 1)≡B  0(1 0)
+
+⍝      0123456
+⍝       ┏┓┗┛━┃
+box←⍉⍪'┌┏     '
+box⍪← '┬┲┱  ┯ '
+box⍪← '┐ ┓    '
+box⍪← '├┢ ┡  ┠'
+box⍪← '┼╆╅╄╃┿╂'
+box⍪← '┤ ┪ ┩ ┨'
+box⍪← '└  ┗   '
+box⍪← '┴  ┺┹┷ '
+box⍪← '┘   ┛  '
+
+Rect←{y x←⍵-1 ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
+shape←⍴light←(⍳9)Rect⍴puzzle
+rect←1 5 2 6 0 6 3 5 4 Rect dir⌽1,≢Points dir pos
+dy dx←-pos
+heavy←dy⊖dx⌽shape↑rect
+vertex←(⊂box)⌷¨⍨light,¨heavy
+edgex←heavy{3↑(3⍴'─━'[2|⍺]),⍨(0=⍵)↓⍕⍵}¨shape↑number
+edgey←'│┃'[heavy∊1 2 6]
+face←3∘⍴¨'░ '[shape↑white]
+grid←¯1 ¯3↓⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
+
+⎕←grid
