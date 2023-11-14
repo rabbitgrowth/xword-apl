@@ -59,6 +59,7 @@ Nav←{(≢point)|⍺+⍵}
 Next← 1∘Nav
 Prev←¯1∘Nav
 Point←{(⍵≥nwhite)(⍵⊃point)}
+Points←{points⊃⍨Word ⍵}
 
 ∆ dir pos≡Point      Square dir pos
 ∆ 0(0 2) ≡Point Next Square dir pos
@@ -94,7 +95,7 @@ box⍪← '┘   ┛  '
 Rect←{y x←⍵-1 ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
 light←(⍳9)Rect⍴puzzle
 shape←⍴light
-rect←1 5 2 6 0 6 3 5 4 Rect dir⌽1,≢points⊃⍨Word dir pos
+rect←1 5 2 6 0 6 3 5 4 Rect dir⌽1,≢Points dir pos
 dy dx←-pos
 heavy←dy⊖dx⌽shape↑rect
 vertex←(⊂box)⌷¨⍨light,¨heavy
