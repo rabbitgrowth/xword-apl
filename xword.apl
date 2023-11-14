@@ -93,8 +93,7 @@ box⍪← '┴  ┺┹┷ '
 box⍪← '┘   ┛  '
 
 Rect←{y x←⍵-1 ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
-light←(⍳9)Rect⍴puzzle
-shape←⍴light
+shape←⍴light←(⍳9)Rect⍴puzzle
 rect←1 5 2 6 0 6 3 5 4 Rect dir⌽1,≢Points dir pos
 dy dx←-pos
 heavy←dy⊖dx⌽shape↑rect
