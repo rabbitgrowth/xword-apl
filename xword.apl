@@ -55,11 +55,11 @@ Dollar←{y x←⍵ ⋄ x+←⍵⌷dollar ⋄ y x}
 
 Word  ←{dir pos←⍵ ⋄ pos⌷dir⊃wordx   wordy}
 Square←{dir pos←⍵ ⋄ pos⌷dir⊃squarex squarey}
-Nav←{(≢point)|⍺+⍵}
+Nav←(≢point)|+
 Next← 1∘Nav
 Prev←¯1∘Nav
 Point←{(⍵≥nwhite)(⍵⊃point)}
-Points←{points⊃⍨Word ⍵}
+Points←points⊃⍨Word
 
 ∆ dir pos≡Point      Square dir pos
 ∆ 0(0 2) ≡Point Next Square dir pos
