@@ -1,7 +1,5 @@
 ⎕IO←0
 
-∆←{0=⍵:⎕SIGNAL 8}
-
 puzzle←⍉⍪' RACED '
 puzzle⍪← 'BELARUS'
 puzzle⍪← 'LABTECH'
@@ -34,11 +32,6 @@ J← 1  0∘Move
 K←¯1  0∘Move
 L← 0  1∘Move
 
-∆ 1 2≡H 1 3
-∆ 4 3≡J 2 3
-∆ 1 0≡K 1 0
-∆ 3 6≡L 3 6
-
 gg    ←  1-+⍀∨⍀ white
 g     ←⊖¯1++⍀∨⍀⊖white
 zero  ←  1-+\∨\ white
@@ -48,21 +41,12 @@ G     ←{y x←⍵ ⋄ y+←⍵⌷g      ⋄ y x}
 Zero  ←{y x←⍵ ⋄ x+←⍵⌷zero   ⋄ y x}
 Dollar←{y x←⍵ ⋄ x+←⍵⌷dollar ⋄ y x}
 
-∆ 1 0≡GG     3 0
-∆ 5 0≡G      3 0
-∆ 0 1≡Zero   0 3
-∆ 0 5≡Dollar 0 3
-
 Word  ←{dir pos←⍵ ⋄ pos⌷dir⊃wordx   wordy}
 Square←{dir pos←⍵ ⋄ pos⌷dir⊃squarex squarey}
 Nav←(≢points)|+
 Next← 1∘Nav
 Prev←¯1∘Nav
 Point←{(⍵≥nwhite)(⍵⊃points)}
-
-∆ 0(0 1)≡Point      Square 0(0 1)
-∆ 0(0 2)≡Point Next Square 0(0 1)
-∆ 1(6 3)≡Point Prev Square 0(0 1)
 
 w ←∊{⌽1+⍳≢⍵}¨groups
 ge←∊{-1+⍳≢⍵}¨groups
@@ -73,13 +57,6 @@ W ←w ∘Jump
 GE←ge∘Jump
 E ←e ∘Jump
 B ←b ∘Jump
-
-∆ 0(2 0)≡W  0(1 3)
-∆ 0(0 5)≡GE 0(1 3)
-∆ 0(1 6)≡E  0(1 3)
-∆ 0(2 6)≡E  0(1 6)
-∆ 0(1 0)≡B  0(1 3)
-∆ 0(0 1)≡B  0(1 0)
 
 ⍝      0123456
 ⍝       ┏┓┗┛━┃
@@ -106,3 +83,26 @@ face←3∘⍴¨'░ '[shape↑white]
 grid←¯1 ¯3↓⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
 
 ⎕←grid
+
+T←{0=⍵:⎕SIGNAL 8}
+
+T 1 2≡H 1 3
+T 4 3≡J 2 3
+T 1 0≡K 1 0
+T 3 6≡L 3 6
+
+T 1 0≡GG     3 0
+T 5 0≡G      3 0
+T 0 1≡Zero   0 3
+T 0 5≡Dollar 0 3
+
+T 0(0 1)≡Point      Square 0(0 1)
+T 0(0 2)≡Point Next Square 0(0 1)
+T 1(6 3)≡Point Prev Square 0(0 1)
+
+T 0(2 0)≡W  0(1 3)
+T 0(0 5)≡GE 0(1 3)
+T 0(1 6)≡E  0(1 3)
+T 0(2 6)≡E  0(1 6)
+T 0(1 0)≡B  0(1 3)
+T 0(0 1)≡B  0(1 0)
