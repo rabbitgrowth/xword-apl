@@ -20,10 +20,10 @@ nblack←+/,~white
 nwordx←+/, headx
 wordx←¯1+white×       ⌈\Count headx
 wordy←¯1+white×nwordx+⌈⍀Count heady
-points←⊃,/{(×nblack)↓⍵⊂⍤⊢⌸⍥,⍳⍴⍵}¨wordx wordy
+groups←⊃,/{(×nblack)↓⍵⊂⍤⊢⌸⍥,⍳⍴⍵}¨wordx wordy
 squarex←¯1+Count white
 squarey←¯1+white×1+nwhite+nblack-⍨{(⍴⍵)⍴⍋⍋,⍵}wordy
-point←(⍸white),{nblack↓(,⍳⍴⍵)[⍋,⍵]}squarey
+points←(⍸white),{nblack↓(,⍳⍴⍵)[⍋,⍵]}squarey
 
 dir←0
 pos←0 1
@@ -55,18 +55,17 @@ Dollar←{y x←⍵ ⋄ x+←⍵⌷dollar ⋄ y x}
 
 Word  ←{dir pos←⍵ ⋄ pos⌷dir⊃wordx   wordy}
 Square←{dir pos←⍵ ⋄ pos⌷dir⊃squarex squarey}
-Nav←(≢point)|+
+Nav←(≢points)|+
 Next← 1∘Nav
 Prev←¯1∘Nav
-Point←{(⍵≥nwhite)(⍵⊃point)}
-Points←points⊃⍨Word
+Point←{(⍵≥nwhite)(⍵⊃points)}
 
 ∆ 0(0 1)≡Point      Square 0(0 1)
 ∆ 0(0 2)≡Point Next Square 0(0 1)
 ∆ 1(6 3)≡Point Prev Square 0(0 1)
 
-w ←∊{⌽1+⍳≢⍵}¨points
-ge←∊{-1+⍳≢⍵}¨points
+w ←∊{⌽1+⍳≢⍵}¨groups
+ge←∊{-1+⍳≢⍵}¨groups
 e ← 1⌽w
 b ←¯1⌽ge
 Jump←{Point(⊃∘⍺Nav⊢)Square⍵}
@@ -96,8 +95,9 @@ box⍪← '┘   ┛  '
 
 Rect←{y x←⍵-1 ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
 shape←⍴light←(⍳9)Rect⍴puzzle
-rect←1 5 2 6 0 6 3 5 4 Rect dir⌽1,≢Points dir pos
-dy dx←-pos
+group←groups⊃⍨Word dir pos
+rect←1 5 2 6 0 6 3 5 4 Rect dir⌽1,≢group
+dy dx←-⊃group
 heavy←dy⊖dx⌽shape↑rect
 vertex←(⊂box)⌷¨⍨light,¨heavy
 edgex←heavy{3↑(3⍴'─━'[2|⍺]),⍨(0=⍵)↓⍕⍵}¨shape↑number
