@@ -23,9 +23,6 @@ squarex←¯1+Count white
 squarey←¯1+white×1+nwhite+nblack-⍨{(⍴⍵)⍴⍋⍋,⍵}wordy
 points←(⍸white),{nblack↓(,⍳⍴⍵)[⍋,⍵]}squarey
 
-dir←0
-pos←0 1
-
 Move←{3::⍵ ⋄ ⍺+⍣{⍺⌷white}⍵}
 H← 0 ¯1∘Move
 J← 1  0∘Move
@@ -71,18 +68,21 @@ box⍪← '┴  ┺┹┷ '
 box⍪← '┘   ┛  '
 
 Rect←{y x←⍵-1 ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
-shape←⍴light←(⍳9)Rect⍴puzzle
-group←groups⊃⍨Word dir pos
-rect←1 5 2 6 0 6 3 5 4 Rect dir⌽1,≢group
-dy dx←-⊃group
-heavy←dy⊖dx⌽shape↑rect
-vertex←(⊂box)⌷¨⍨light,¨heavy
-edgex←heavy{3↑(3⍴'─━'[2|⍺]),⍨(0=⍵)↓⍕⍵}¨shape↑number
-edgey←'│┃'[heavy∊1 2 6]
-face←3∘⍴¨'░ '[shape↑white]
-grid←¯1 ¯3↓⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
+Render←{
+    dir pos puzzle←⍵
+    shape←⍴light←(⍳9)Rect⍴puzzle
+    group←groups⊃⍨Word dir pos
+    rect←1 5 2 6 0 6 3 5 4 Rect dir⌽1,≢group
+    dy dx←-⊃group
+    heavy←dy⊖dx⌽shape↑rect
+    vertex←(⊂box)⌷¨⍨light,¨heavy
+    edgex←heavy{3↑(3⍴'─━'[2|⍺]),⍨(0=⍵)↓⍕⍵}¨shape↑number
+    edgey←'│┃'[heavy∊1 2 6]
+    face←3∘⍴¨'░ '[shape↑white]
+    ¯1 ¯3↓⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
+}
 
-⎕←grid
+⎕←Render 0(0 1)puzzle
 
 T←{0=⍵:⎕SIGNAL 8}
 
