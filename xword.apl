@@ -83,6 +83,7 @@ Render←{
 }
 
 stdin←'/dev/stdin' ⎕NTIE 0
+Read←{⎕UCS⊃1stdin⎕ARBIN⍬}
 cr esc←⎕UCS 13 27
 
 dir←0
@@ -102,15 +103,17 @@ pos←⊃points
         ⍵='j':pos⊢←J      pos
         ⍵='k':pos⊢←K      pos
         ⍵='l':pos⊢←L      pos
-        ⍵='g':pos⊢←GG     pos ⍝ gg
         ⍵='G':pos⊢←G      pos
         ⍵='0':pos⊢←Zero   pos
         ⍵='$':pos⊢←Dollar pos
-        ⍵='w':dir pos⊢←W  dir pos
-        ⍵='[':dir pos⊢←GE dir pos ⍝ ge
-        ⍵='e':dir pos⊢←E  dir pos
-        ⍵='b':dir pos⊢←B  dir pos
-    }⎕UCS⊃1stdin⎕ARBIN⍬
+        ⍵='w':dir pos⊢←W dir pos
+        ⍵='e':dir pos⊢←E dir pos
+        ⍵='b':dir pos⊢←B dir pos
+        ⍵='g':{
+            ⍵='g':pos⊢←GG pos
+            ⍵='e':dir pos⊢←GE dir pos
+        }Read⍬
+    }Read⍬
 :EndRepeat
 
 T←{0=⍵:⎕SIGNAL 8}
