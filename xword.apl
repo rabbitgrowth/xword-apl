@@ -82,7 +82,36 @@ Render←{
     ¯1 ¯3↓⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
 }
 
-⎕←Render 0(0 1)puzzle
+stdin←'/dev/stdin' ⎕NTIE 0
+cr esc←⎕UCS 13 27
+
+dir←0
+pos←⊃points
+
+:Repeat
+    grid←Render dir pos puzzle
+    out ←esc,'[2J'   ⍝ clear screen
+    out,←esc,'[1;1H' ⍝ move cursor to top left
+    out,←∊grid,cr
+    y x←⍕¨2 3+2 4×pos
+    out,←esc,'[',y,';',x,'H' ⍝ move cursor to pos
+    ⍞←out
+    {
+        ⍵=' ':dir⊢←~dir
+        ⍵='h':pos⊢←H      pos
+        ⍵='j':pos⊢←J      pos
+        ⍵='k':pos⊢←K      pos
+        ⍵='l':pos⊢←L      pos
+        ⍵='g':pos⊢←GG     pos ⍝ gg
+        ⍵='G':pos⊢←G      pos
+        ⍵='0':pos⊢←Zero   pos
+        ⍵='$':pos⊢←Dollar pos
+        ⍵='w':dir pos⊢←W  dir pos
+        ⍵='[':dir pos⊢←GE dir pos ⍝ ge
+        ⍵='e':dir pos⊢←E  dir pos
+        ⍵='b':dir pos⊢←B  dir pos
+    }⎕UCS⊃1stdin⎕ARBIN⍬
+:EndRepeat
 
 T←{0=⍵:⎕SIGNAL 8}
 
