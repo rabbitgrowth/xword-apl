@@ -82,7 +82,7 @@ Render←{
     ¯1 ¯3↓⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
 }
 
-stdin←'/dev/stdin' ⎕NTIE 0
+stdin←'/dev/stdin'⎕NTIE 0
 Read←{⎕UCS⊃1stdin⎕ARBIN⍬}
 cr esc←⎕UCS 13 27
 
