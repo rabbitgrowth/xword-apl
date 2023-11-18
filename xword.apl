@@ -101,35 +101,22 @@ input←''⍴⍨⍴puzzle
     ⍞←out
     :If mode=0
         :Select Read⍬
-        :Case ' '
-            dir⊢←~dir
-        :Case 'h'
-            pos⊢←H pos
-        :Case 'j'
-            pos⊢←J pos
-        :Case 'k'
-            pos⊢←K pos
-        :Case 'l'
-            pos⊢←L pos
+        :Case ' ' ⋄ dir⊢←~dir
+        :Case 'h' ⋄ pos⊢←H pos
+        :Case 'j' ⋄ pos⊢←J pos
+        :Case 'k' ⋄ pos⊢←K pos
+        :Case 'l' ⋄ pos⊢←L pos
         :Case 'g'
             :Select Read⍬
-            :Case 'g'
-                pos⊢←GG pos
-            :Case 'e'
-                dir pos⊢←GE dir pos
+            :Case 'g' ⋄ pos⊢←GG pos
+            :Case 'e' ⋄ dir pos⊢←GE dir pos
             :EndSelect
-        :Case 'G'
-            pos⊢←G pos
-        :Case '0'
-            pos⊢←Zero pos
-        :Case '$'
-            pos⊢←Dollar pos
-        :Case 'w'
-            dir pos⊢←W dir pos
-        :Case 'e'
-            dir pos⊢←E dir pos
-        :Case 'b'
-            dir pos⊢←B dir pos
+        :Case 'G' ⋄ pos⊢←G      pos
+        :Case '0' ⋄ pos⊢←Zero   pos
+        :Case '$' ⋄ pos⊢←Dollar pos
+        :Case 'w' ⋄ dir pos⊢←W dir pos
+        :Case 'e' ⋄ dir pos⊢←E dir pos
+        :Case 'b' ⋄ dir pos⊢←B dir pos
         :Case 'i'
             mode←1
             ⍞←esc,'[5 q'
