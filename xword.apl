@@ -78,7 +78,7 @@ Render←{
     vertex←(⊂box)⌷¨⍨light,¨heavy
     edgex←heavy{3↑(3⍴'─━'[2|⍺]),⍨(0=⍵)↓⍕⍵}¨shape↑number
     edgey←'│┃'[heavy∊1 2 6]
-    face←shape↑white{~⍺:3⍴'░' ⋄ ' ',⍵,' '}¨input
+    face←shape↑white{⍺⊃(3⍴'░')(' '⍵' ')}¨input
     ¯1 ¯3↓⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
 }
 
