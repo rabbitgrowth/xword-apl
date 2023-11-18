@@ -69,8 +69,8 @@ box⍪← '┘   ┛  '
 
 Rect←{y x←⍵-1 ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
 Render←{
-    dir pos puzzle←⍵
-    shape←⍴light←(⍳9)Rect⍴puzzle
+    dir pos input←⍵
+    shape←⍴light←(⍳9)Rect⍴input
     group←groups⊃⍨Word dir pos
     rect←1 5 2 6 0 6 3 5 4 Rect dir⌽1,≢group
     dy dx←-⊃group
@@ -78,7 +78,7 @@ Render←{
     vertex←(⊂box)⌷¨⍨light,¨heavy
     edgex←heavy{3↑(3⍴'─━'[2|⍺]),⍨(0=⍵)↓⍕⍵}¨shape↑number
     edgey←'│┃'[heavy∊1 2 6]
-    face←3∘⍴¨'░ '[shape↑white]
+    face←shape↑white{~⍺:3⍴'░' ⋄ ' ',⍵,' '}¨input
     ¯1 ¯3↓⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
 }
 
@@ -86,34 +86,59 @@ stdin←'/dev/stdin'⎕NTIE 0
 Read←{⎕UCS⊃1stdin⎕ARBIN⍬}
 cr esc←⎕UCS 13 27
 
+mode←0
 dir←0
 pos←⊃points
+input←''⍴⍨⍴puzzle
 
 :Repeat
-    grid←Render dir pos puzzle
+    grid←Render dir pos input
     out ←esc,'[2J'   ⍝ clear screen
     out,←esc,'[1;1H' ⍝ move cursor to top left
     out,←∊grid,cr
     y x←⍕¨2 3+2 4×pos
     out,←esc,'[',y,';',x,'H' ⍝ move cursor to pos
     ⍞←out
-    {
-        ⍵=' ':dir⊢←~dir
-        ⍵='h':pos⊢←H      pos
-        ⍵='j':pos⊢←J      pos
-        ⍵='k':pos⊢←K      pos
-        ⍵='l':pos⊢←L      pos
-        ⍵='G':pos⊢←G      pos
-        ⍵='0':pos⊢←Zero   pos
-        ⍵='$':pos⊢←Dollar pos
-        ⍵='w':dir pos⊢←W dir pos
-        ⍵='e':dir pos⊢←E dir pos
-        ⍵='b':dir pos⊢←B dir pos
-        ⍵='g':{
-            ⍵='g':pos⊢←GG pos
-            ⍵='e':dir pos⊢←GE dir pos
-        }Read⍬
-    }Read⍬
+    :If mode=0
+        :Select Read⍬
+        :Case ' '
+            dir⊢←~dir
+        :Case 'h'
+            pos⊢←H pos
+        :Case 'j'
+            pos⊢←J pos
+        :Case 'k'
+            pos⊢←K pos
+        :Case 'l'
+            pos⊢←L pos
+        :Case 'g'
+            :Select Read⍬
+            :Case 'g'
+                pos⊢←GG pos
+            :Case 'e'
+                dir pos⊢←GE dir pos
+            :EndSelect
+        :Case 'G'
+            pos⊢←G pos
+        :Case '0'
+            pos⊢←Zero pos
+        :Case '$'
+            pos⊢←Dollar pos
+        :Case 'w'
+            dir pos⊢←W dir pos
+        :Case 'e'
+            dir pos⊢←E dir pos
+        :Case 'b'
+            dir pos⊢←B dir pos
+        :Case 'i'
+            mode←1
+            ⍞←esc,'[5 q'
+        :EndSelect
+    :Else
+        y x←pos
+        input[y;x]←Read⍬
+        dir pos⊢←Point Next Square dir pos
+    :EndIf
 :EndRepeat
 
 T←{0=⍵:⎕SIGNAL 8}
