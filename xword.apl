@@ -119,7 +119,7 @@ input←''⍴⍨⍴puzzle
         :Case 'b' ⋄ dir pos⊢←B dir pos
         :Case 'i'
             mode←1
-            ⍞←esc,'[5 q'
+            ⍞←esc,'[5 q' ⍝ change cursor to ibeam
         :EndSelect
     :Else
         y x←pos
