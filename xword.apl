@@ -91,13 +91,14 @@ box⍪← '┴  ┺┹┷ '
 box⍪← '┘   ┛  '
 
 Rect←{y x←⍵-1 ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
+Light←(⍳9)             ∘Rect
+Heavy←1 5 2 6 0 6 3 5 4∘Rect
 Draw←{
     dir pos input←⍵
-    shape←⍴light←(⍳9)Rect⍴input
+    shape←⍴light←Light⍴input
     group←groups⊃⍨Word dir pos
-    rect←1 5 2 6 0 6 3 5 4 Rect dir⌽1,≢group
     dy dx←-⊃group
-    heavy←dy⊖dx⌽shape↑rect
+    heavy←dy⊖dx⌽shape↑Heavy dir⌽1,≢group
     vertex←(⊂box)⌷¨⍨light,¨heavy
     edgex←heavy{3↑(3⍴'─━'[2|⍺]),⍨(0=⍵)↓⍕⍵}¨shape↑number
     edgey←'│┃'[heavy∊1 2 6]
