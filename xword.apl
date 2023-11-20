@@ -91,7 +91,7 @@ box⍪← '┴  ┺┹┷ '
 box⍪← '┘   ┛  '
 
 Rect←{y x←⍵-1 ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
-Render←{
+Draw←{
     dir pos input←⍵
     shape←⍴light←(⍳9)Rect⍴input
     group←groups⊃⍨Word dir pos
@@ -115,7 +115,7 @@ pos←⊃points
 input←''⍴⍨⍴puzzle
 
 :Repeat
-    grid←Render dir pos input
+    grid←Draw dir pos input
     out ←esc,'[2J'   ⍝ clear screen
     out,←esc,'[1;1H' ⍝ move cursor to top left
     out,←∊grid,cr
