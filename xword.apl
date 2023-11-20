@@ -122,8 +122,9 @@ input←''⍴⍨⍴puzzle
     y x←⍕¨2 3+2 4×pos
     out,←esc,'[',y,';',x,'H' ⍝ move cursor to pos
     ⍞←out
+    char←Read⍬
     :If mode=0
-        :Select Read⍬
+        :Select char
         :Case ' ' ⋄ dir⊢←~dir
         :Case 'h' ⋄ pos⊢←H pos
         :Case 'j' ⋄ pos⊢←J pos
@@ -142,11 +143,17 @@ input←''⍴⍨⍴puzzle
         :Case 'b' ⋄ dir pos⊢←B dir pos
         :Case 'i'
             mode←1
-            ⍞←esc,'[5 q' ⍝ change cursor to ibeam
+            ⍞←esc,'[5 q' ⍝ ibeam cursor
         :EndSelect
     :Else
-        y x←pos
-        input[y;x]←Read⍬
-        dir pos⊢←Point Next Square dir pos
+        :Select char
+        :CaseList ⎕C⎕A
+            y x←pos
+            input[y;x]←char
+            dir pos⊢←Point Next Square dir pos
+        :Case esc
+            mode←0
+            ⍞←esc,'[0 q' ⍝ block cursor
+        :EndSelect
     :EndIf
 :EndRepeat
