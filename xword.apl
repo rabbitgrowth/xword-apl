@@ -2,15 +2,15 @@
 
 ∆←{0=⍵:⎕SIGNAL 8}
 
-puzzle←⍉⍪' RACED '
-puzzle⍪← 'BELARUS'
-puzzle⍪← 'LABTECH'
-puzzle⍪← 'ALE CHE'
-puzzle⍪← 'KIRSTIE'
-puzzle⍪← 'ESTREET'
-puzzle⍪← ' MAIDS '
+sol←⍉⍪' RACED '
+sol⍪← 'BELARUS'
+sol⍪← 'LABTECH'
+sol⍪← 'ALE CHE'
+sol⍪← 'KIRSTIE'
+sol⍪← 'ESTREET'
+sol⍪← ' MAIDS '
 
-white←' '≠puzzle
+white←' '≠sol
 headx←2</0,white
 heady←2<⌿0⍪white
 Count←{⍵×(⍴⍵)⍴+\,⍵}
@@ -94,15 +94,15 @@ Rect←{y x←⍵-1 ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
 Light←(⍳9)             ∘Rect
 Heavy←1 5 2 6 0 6 3 5 4∘Rect
 Draw←{
-    dir pos input←⍵
-    shape←⍴light←Light⍴input
+    dir pos ans←⍵
+    shape←⍴light←Light⍴ans
     group←groups⊃⍨Word dir pos
     dy dx←-⊃group
     heavy←dy⊖dx⌽shape↑Heavy dir⌽1,≢group
     vertex←(⊂box)⌷¨⍨light,¨heavy
     edgex←heavy{3↑(3⍴'─━'[2|⍺]),⍨(0=⍵)↓⍕⍵}¨shape↑number
     edgey←'│┃'[heavy∊1 2 6]
-    face←shape↑white{⍺⊃(3⍴'░')(' '⍵' ')}¨input
+    face←shape↑white{⍺⊃(3⍴'░')(' '⍵' ')}¨ans
     ¯1 ¯3↓⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
 }
 
@@ -113,10 +113,10 @@ cr esc←⎕UCS 13 27
 mode←0
 dir←0
 pos←⊃points
-input←''⍴⍨⍴puzzle
+ans←''⍴⍨⍴sol
 
 :Repeat
-    grid←Draw dir pos input
+    grid←Draw dir pos ans
     out ←esc,'[2J'   ⍝ clear screen
     out,←esc,'[1;1H' ⍝ move cursor to top left
     out,←∊grid,cr
@@ -150,7 +150,7 @@ input←''⍴⍨⍴puzzle
         :Select char
         :CaseList ⎕C⎕A
             y x←pos
-            input[y;x]←char
+            ans[y;x]←char
             dir pos⊢←Point Next Square dir pos
         :Case esc
             mode←0
