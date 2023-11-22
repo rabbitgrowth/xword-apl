@@ -134,8 +134,8 @@ Read ←{⎕UCS⊃1stdin⎕ARBIN⍬}
 Write←{stdout⎕ARBOUT'UTF-8'⎕UCS⍵}
 lf cr esc←⎕UCS 10 13 27
 
-mode←0
-dir←0
+mode←0 ⍝ normal insert
+dir ←0 ⍝ across down
 pos←⊃points
 ans←''⍴⍨⍴sol
 
