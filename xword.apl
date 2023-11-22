@@ -98,7 +98,7 @@ Grid←{
     group←groups⊃⍨Word dir pos
     dy dx←-⊃group
     heavy←dy⊖dx⌽shape↑Heavy dir⌽1,≢group
-    vertex←(⊂box)⌷¨⍨light,¨heavy
+    vertex←(light,¨heavy)⌷¨⊂box
     edgex←heavy{3↑(3⍴'─━'[2|⍺]),⍨(0=⍵)↓⍕⍵}¨shape↑num
     edgey←'│┃'[heavy∊1 2 6]
     face←shape↑white{⍺⊃(3⍴'░')(' '⍵' ')}¨ans
