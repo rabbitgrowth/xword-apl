@@ -196,8 +196,7 @@ ans←''⍴⍨⍴sol
     :Else
         :Select char
         :CaseList ⎕C⎕A
-            y x←pos
-            ans[y;x]←1⎕C char
+            (pos⌷ans)←1⎕C char
             dir pos⊢←Point Next Square dir pos
         :Case esc
             mode←0
