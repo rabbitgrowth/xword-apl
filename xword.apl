@@ -116,8 +116,8 @@ List←{(⊃⍪/(≢¨⍵)↑¨{⍉⍪2 0⍕⍵}¨⍺),' ',⊃⍪/⍵}
 listx listy←numx numy List¨wrapx wrapy
 Clues←{
     dir pos←⍵
-    words←Word¨(⊂⊂pos),¨⍨(⊢,~)dir
-    Arrow←{∊'>- '[⍺⍳¨⍨⊂words]↑¨⍨≢¨⍵}
+    words←Word¨((⊢,~)dir),¨⊂⊂pos
+    Arrow←{∊(≢¨⍵)↑¨'>- '[⍺⍳¨⍨⊂words]}
     arrowx arrowy←iwordx iwordy Arrow¨wrapx wrapy
     (arrowx,listx)(arrowy,listy)
 }
