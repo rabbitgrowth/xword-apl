@@ -140,7 +140,7 @@ iwordy←nwordx+⍳nwordy
 Text←{
     dir pos←⍵
     words←Word¨(⊂⊂pos),¨⍨(⊢,~)dir
-    Arrow←{∊'>. '[⍺⍳¨⍨⊂words]↑¨⍨≢¨⍵}
+    Arrow←{∊'>- '[⍺⍳¨⍨⊂words]↑¨⍨≢¨⍵}
     arrowx arrowy←iwordx iwordy Arrow¨wrapx wrapy
     (arrowx,listx)(arrowy,listy)
 }
