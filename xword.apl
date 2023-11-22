@@ -38,6 +38,8 @@ nwhite←+/, white
 nblack←+/,~white
 nwordx←+/, headx
 nwordy←+/, heady
+iwordx←       ⍳nwordx
+iwordy←nwordx+⍳nwordy
 wordx←¯1+white×       ⌈\Count headx
 wordy←¯1+white×nwordx+⌈⍀Count heady
 groups←⊃,/{(×nblack)↓⍵⊂⍤⊢⌸⍥,⍳⍴⍵}¨wordx wordy
@@ -135,8 +137,6 @@ Wrap←{
 wrapx wrapy←25 Wrap¨¨cluex cluey
 List←{(⊃⍪/(≢¨⍵)↑¨{⍉⍪2 0⍕⍵}¨⍺),' ',⊃⍪/⍵}
 listx listy←numx numy List¨wrapx wrapy
-iwordx←       ⍳nwordx
-iwordy←nwordx+⍳nwordy
 Text←{
     dir pos←⍵
     words←Word¨(⊂⊂pos),¨⍨(⊢,~)dir
