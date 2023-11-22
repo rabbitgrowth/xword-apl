@@ -133,7 +133,7 @@ Wrap←{
     (⍉⍪⍺↑take↑⍵)⍪⍺∇drop↓⍵
 }
 wrapx wrapy←25 Wrap¨¨cluex cluey
-List←{(⊃⍪/(≢¨⍵)↑¨{⍉⍪¯2↑⍕⍵}¨⍺),' ',⊃⍪/⍵}
+List←{(⊃⍪/(≢¨⍵)↑¨{⍉⍪2 0⍕⍵}¨⍺),' ',⊃⍪/⍵}
 listx listy←numx numy List¨wrapx wrapy
 iwordx←       ⍳nwordx
 iwordy←nwordx+⍳nwordy
