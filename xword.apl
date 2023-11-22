@@ -139,8 +139,8 @@ iwordx←       ⍳nwordx
 iwordy←nwordx+⍳nwordy
 Text←{
     dir pos←⍵
-    words←Word¨((⊢,~)dir),¨⊂⊂pos
-    Arrow←{∊(≢¨⍵)↑¨'>. '[⍺⍳¨⍨⊂words]}
+    words←Word¨(⊂⊂pos),¨⍨(⊢,~)dir
+    Arrow←{∊'>. '[⍺⍳¨⍨⊂words]↑¨⍨≢¨⍵}
     arrowx arrowy←iwordx iwordy Arrow¨wrapx wrapy
     (arrowx,listx)(arrowy,listy)
 }
@@ -148,7 +148,7 @@ Text←{
 Puzzle←{
     grid←Grid   ⍵
     text←Text¯1↓⍵
-    ¯1↓⍤1⊃,/' ',¨⍨(⊂grid),(≢grid)↑¨text
+    ¯1↓⍤1⊃,/' ',¨⍨(⊂grid),text↑¨⍨≢grid
 }
 
 stdin ←'/dev/stdin' ⎕NTIE 0
