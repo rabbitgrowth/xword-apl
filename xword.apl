@@ -146,9 +146,9 @@ Text←{
 }
 
 Puzzle←{
-    grid←Grid   ⍵
-    text←Text¯1↓⍵
-    ¯1↓⍤1⊃,/' ',¨⍨(⊂grid),text↑¨⍨≢grid
+    boxes←(⊂Grid⍵),Text¯1↓⍵
+    height←⌈/≢¨boxes
+    ¯1↓⍤1⊃,/{' ',⍨height↑⍵}¨boxes
 }
 
 stdin ←'/dev/stdin' ⎕NTIE 0
