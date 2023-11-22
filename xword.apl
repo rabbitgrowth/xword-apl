@@ -144,7 +144,7 @@ ans←''⍴⍨⍴sol
     puzzle←Puzzle dir pos ans
     out ←esc,'[2J'   ⍝ clear screen
     out,←esc,'[1;1H' ⍝ move cursor to top left
-    out,←∊puzzle,⊂cr lf
+    out,←,lf,⍨cr,⍨puzzle
     y x←⍕¨2 3+2 4×pos
     out,←esc,'[',y,';',x,'H' ⍝ move cursor to pos
     Write out
