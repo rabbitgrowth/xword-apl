@@ -123,8 +123,8 @@ Clues←{
 }
 
 Puzzle←{
-    grid ←Grid    ⍵
-    clues←Clues¯1↓⍵
+    grid←Grid⍵
+    clues←'Across' 'Down'{⍵⍪⍨⍺↑⍨≢⍉⍵}¨Clues¯1↓⍵
     height←⌈/≢¨(⊂grid),clues
     ⊃,/height↑¨(⊂grid),' ',¨clues
 }
