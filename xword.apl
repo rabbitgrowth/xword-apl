@@ -192,6 +192,7 @@ ans←''⍴⍨⍴sol
         :Case 'i'
             mode←1
             Write esc,'[5 q' ⍝ ibeam cursor
+        :Case 'x' ⋄ (pos⌷ans)←' '
         :EndSelect
     :Else
         :Select char
