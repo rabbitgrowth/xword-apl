@@ -60,7 +60,7 @@ G     ←{y x←⍵ ⋄ y+←⍵⌷g      ⋄ y x}
 Zero  ←{y x←⍵ ⋄ x+←⍵⌷zero   ⋄ y x}
 Dollar←{y x←⍵ ⋄ x+←⍵⌷dollar ⋄ y x}
 
-Word  ←{dir pos←⍵ ⋄ pos⌷dir⊃wordx   wordy}
+Word  ←{dir pos←⍵ ⋄ pos⌷dir⊃wordx wordy}
 Square←{dir pos←⍵ ⋄ pos⌷dir⊃squarex squarey}
 Nav←(≢points)|+
 Next← 1∘Nav
