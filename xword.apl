@@ -40,7 +40,7 @@ iwordx←       ⍳nwordx
 iwordy←nwordx+⍳nwordy
 wordx←¯1+white×       ⌈\Count headx
 wordy←¯1+white×nwordx+⌈⍀Count heady
-groups←⊃,/{(×nblack)↓⍵⊂⍤⊢⌸⍥,⍳⍴⍵}¨wordx wordy
+groups←⊃,/{k v←↓⍉⍵,⍥⊂⌸⍥,⍳⍴⍵ ⋄ v/⍨k≥0}¨wordx wordy
 squarex←¯1+Count white
 squarey←¯1+white×1+nwhite+nblack-⍨{(⍴⍵)⍴⍋⍋,⍵}wordy
 points←(⍸white),{nblack↓(,⍳⍴⍵)[⍋,⍵]}squarey
