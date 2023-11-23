@@ -140,17 +140,24 @@ stdout←'/dev/stdout'⎕NTIE 0
 Read ←{⎕UCS⊃1stdin⎕ARBIN⍬}
 Write←{stdout⎕ARBOUT'UTF-8'⎕UCS⍵}
 
+Cursor←{y x←⍕¨1+⍵ ⋄ esc,'[',y,';',x,'H'}
+clear    ←esc,'[2J'
+block    ←esc,'[0 q'
+ibeam    ←esc,'[5 q'
+underline←esc,'[3 q'
+
 mode←0 ⍝ normal insert
 dir ←0 ⍝ across down
 pos←⊃points
 
+Set←{⍵∊' ',⎕C⎕A:(pos⌷ans)⊢←1⎕C⍵}
+
 :Repeat
     puzzle←Puzzle dir pos ans
-    out ←esc,'[2J'   ⍝ clear screen
-    out,←esc,'[1;1H' ⍝ move cursor to top left
+    out ←clear
+    out,←Cursor 0 0
     out,←,lf,⍨cr,⍨puzzle
-    y x←⍕¨2 3+2 4×pos
-    out,←esc,'[',y,';',x,'H' ⍝ move cursor to pos
+    out,←Cursor 1 2+2 4×pos
     Write out
     char←Read⍬
     :If mode=0
@@ -173,17 +180,21 @@ pos←⊃points
         :Case 'b' ⋄ dir pos←B dir pos
         :Case 'i'
             mode←1
-            Write esc,'[5 q' ⍝ ibeam cursor
-        :Case 'x' ⋄ (pos⌷ans)←' '
+            Write ibeam
+        :Case 'r'
+            Write underline
+            Set Read⍬
+            Write block
+        :Case 'x' ⋄ Set ' '
         :EndSelect
     :Else
         :Select char
-        :CaseList ⎕C⎕A
-            (pos⌷ans)←1⎕C char
-            dir pos←Point Next Square dir pos
         :Case esc
             mode←0
-            Write esc,'[0 q' ⍝ block cursor
+            Write block
+        :Else
+            Set char
+            dir pos←Point Next Square dir pos
         :EndSelect
     :EndIf
 :EndRepeat
