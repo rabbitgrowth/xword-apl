@@ -2,13 +2,28 @@
 
 nul lf cr esc←⎕UCS 0 10 13 27
 
-sol←⍉⍪' RACED '
-sol⍪← 'BELARUS'
-sol⍪← 'LABTECH'
-sol⍪← 'ALE CHE'
-sol⍪← 'KIRSTIE'
-sol⍪← 'ESTREET'
-sol⍪← ' MAIDS '
+⍝ ISO-8859-1
+cp ←⎕UCS⍳128
+cp,←32⍴''              ⍝ undefined
+cp,←' ¡¢£¤¥¦§¨©ª«¬-®¯' ⍝ nbsp→space shy→hyphen
+cp,←'°±²³´µ¶·¸¹º»¼½¾¿'
+cp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏ'
+cp,←'ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß'
+cp,←'àáâãäåæçèéêëìíîï'
+cp,←'ðñòóôõö÷øùúûüýþÿ'
+Decode←{cp[256|⍵]}
+
+argv←2⎕NQ#'GetCommandLineArgs'
+file←1⊃argv
+tie←file⎕NTIE 0
+data←⎕NREAD tie 83 ¯1
+shape ←2,  data[44+⍳2]
+nclues←16⊥⌽data[46+⍳2]
+bound←×/shape
+sol ans←⊂⍤2⊢shape⍴' '@(∊∘'.-')Decode data[52+⍳bound]
+strings←{¯1↓¨⍵⊂⍨¯1⌽nul=⍵}     Decode data↓⍨52+bound
+clues←¯1↓3↓strings
+⎕NUNTIE tie
 
 cluex ←⊂'Competed in the downhill or super-G'
 cluex,←⊂'Country between Ukraine and Lithuania'
@@ -139,7 +154,6 @@ Write←{stdout⎕ARBOUT'UTF-8'⎕UCS⍵}
 mode←0 ⍝ normal insert
 dir ←0 ⍝ across down
 pos←⊃points
-ans←''⍴⍨⍴sol
 
 :Repeat
     puzzle←Puzzle dir pos ans
