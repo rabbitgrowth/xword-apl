@@ -114,7 +114,7 @@ Wrap←{
 wrapx wrapy←25 Wrap¨¨cluex cluey
 List←{(⊃⍪/(≢¨⍵)↑¨{⍉⍪2 0⍕⍵}¨⍺),' ',⊃⍪/⍵}
 listx listy←numx numy List¨wrapx wrapy
-Clues←{
+Text←{
     dir pos←⍵
     words←Word¨((⊢,~)dir),¨⊂⊂pos
     Arrow←{∊(≢¨⍵)↑¨'>- '[⍺⍳¨⍨⊂words]}
@@ -124,9 +124,9 @@ Clues←{
 
 Puzzle←{
     grid←Grid⍵
-    clues←'Across' 'Down'{⍵⍪⍨⍺↑⍨≢⍉⍵}¨Clues¯1↓⍵
-    height←⌈/≢¨(⊂grid),clues
-    ⊃,/height↑¨(⊂grid),' ',¨clues
+    text←'Across' 'Down'{⍵⍪⍨⍺↑⍨≢⍉⍵}¨Text¯1↓⍵
+    height←⌈/≢¨(⊂grid),text
+    ⊃,/height↑¨(⊂grid),' ',¨text
 }
 
 stdin ←'/dev/stdin' ⎕NTIE 0
