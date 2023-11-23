@@ -1,5 +1,7 @@
 ⎕IO←0
 
+nul lf cr esc←⎕UCS 0 10 13 27
+
 sol←⍉⍪' RACED '
 sol⍪← 'BELARUS'
 sol⍪← 'LABTECH'
@@ -133,7 +135,6 @@ stdin ←'/dev/stdin' ⎕NTIE 0
 stdout←'/dev/stdout'⎕NTIE 0
 Read ←{⎕UCS⊃1stdin⎕ARBIN⍬}
 Write←{stdout⎕ARBOUT'UTF-8'⎕UCS⍵}
-lf cr esc←⎕UCS 10 13 27
 
 mode←0 ⍝ normal insert
 dir ←0 ⍝ across down
