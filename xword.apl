@@ -25,23 +25,6 @@ strings←{¯1↓¨⍵⊂⍨¯1⌽nul=⍵}     Decode data↓⍨52+bound
 clues←¯1↓3↓strings
 ⎕NUNTIE tie
 
-cluex ←⊂'Competed in the downhill or super-G'
-cluex,←⊂'Country between Ukraine and Lithuania'
-cluex,←⊂'Worker in a bio building'
-cluex,←⊂'The "A" of I.P.A.'
-cluex,←⊂'Michael of "S.N.L."'
-cluex,←⊂'Alley who''s a spokesperson for Jenny Craig'
-cluex,←⊂'___ Band, backers of Bruce Springsteen'
-cluex,←⊂'Hotel cleaners'
-cluey ←⊂'Painting style of Winslow Homer and Edward Hopper'
-cluey,←⊂'Canadian province that borders Montana'
-cluey,←⊂'Sofa scratcher'
-cluey,←⊂'Put up, as a building'
-cluey,←⊂'Territories for English nobility'
-cluey,←⊂'Country star Shelton'
-cluey,←⊂'Unit of fabric or ice'
-cluey,←⊂'___ Lanka'
-
 Count←{⍵×(⍴⍵)⍴+\,⍵}
 white←' '≠sol
 headx←2</0,white
@@ -61,6 +44,12 @@ groups←⊃,/{(×nblack)↓⍵⊂⍤⊢⌸⍥,⍳⍴⍵}¨wordx wordy
 squarex←¯1+Count white
 squarey←¯1+white×1+nwhite+nblack-⍨{(⍴⍵)⍴⍋⍋,⍵}wordy
 points←(⍸white),{nblack↓(,⍳⍴⍵)[⍋,⍵]}squarey
+
+nums←{⍵[⍋⍵]}numx,numy
+icluex←nums⍳numx
+icluey←icluex~⍨⍳≢nums
+cluex←clues[icluex]
+cluey←clues[icluey]
 
 Move←{3::⍵ ⋄ ⍺+⍣{⍺⌷white}⍵}
 H← 0 ¯1∘Move
