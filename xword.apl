@@ -12,7 +12,7 @@ nclues←16⊥⌽data[46+⍳2]
 bound←×/shape
 body←⎕UCS 52↓data
 sol ans←⊂⍤2⊢shape⍴' '@(∊∘'.-')bound↑body
-strings←{¯1↓¨⍵⊂⍨¯1⌽nul=⍵}     bound↓body
+strings←(¯1↓¨⊢⊂⍨¯1⌽nul∘=)     bound↓body
 cluestr←¯1↓3↓strings
 
 dirs←⍳2
