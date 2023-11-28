@@ -11,12 +11,12 @@ cp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏ'
 cp,←'ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß'
 cp,←'àáâãäåæçèéêëìíîï'
 cp,←'ðñòóôõö÷øùúûüýþÿ'
-Decode←{cp[256|⍵]}
+Decode←{cp[⍵]}
 
 argv←2⎕NQ#'GetCommandLineArgs'
 file←1⊃argv
 tie←file⎕NTIE 0
-data←⎕NREAD tie 83 ¯1
+data←256|⎕NREAD tie 83 ¯1
 ⎕NUNTIE tie
 shape ←2,  data[44+⍳2]
 nclues←16⊥⌽data[46+⍳2]
