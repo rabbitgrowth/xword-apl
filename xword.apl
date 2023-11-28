@@ -66,7 +66,7 @@ CharID←{dir pos←⍵ ⋄ pos⌷dir⊃charids}
 Nav←(≢chars)|+
 Next← 1∘Nav
 Prev←¯1∘Nav
-Char←<∘nwhite,∘⊂⊃∘chars
+Char←<∘nwhite,⌷∘chars
 
 w ←∊(⌽1+⍳⍤≢)¨words
 ge←∊(-1+⍳⍤≢)¨words
