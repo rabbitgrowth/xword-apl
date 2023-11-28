@@ -81,18 +81,6 @@ Rect←{y x←⍵-1 ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
 Light←(⍳9)             ∘Rect
 Heavy←1 5 2 6 0 6 3 5 4∘Rect
 
-Grid←{
-    shape←⍴light←Light⍴ans ⍝ can technically be precomputed
-    word←words⊃⍨pos⌷dir⊃wordids
-    dy dx←-⊃word
-    heavy←dy⊖dx⌽shape↑Heavy dir⌽1,⍨≢word
-    vertex←(light,¨heavy)⌷¨⊂box
-    edgex←heavy{3↑(3⍴'─━'⊃⍨2|⍺),⍨(0∘=↓⍕)⍵}¨shape↑nos
-    edgey←'│┃'[heavy∊1 2 6]
-    face←shape↑white{~⍺:3⍴'░' ⋄ ' '⍵' '}¨ans
-    ¯1 ¯3↓⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
-}
-
 Wrap←{
     ⍺≥⍴⍵:⍉⍪⍺↑⍵
     take←⊃⌽⍺,⍸' '=(⍺+1)↑⍵
@@ -104,18 +92,6 @@ boxes←25 Wrap¨¨clues
 heights←≢¨¨boxes
 lists←{(⊃⍪/(⍵⊃heights)↑∘(⍉⍤⍪¯2↑⍕)¨⍵⊃listnos),' ',⊃⍪/⍵⊃boxes}¨dirs
 padded←¯1+heights(∊↑¨)¨1+listids
-
-Text←{
-    arrows←{(' ','->'⊃⍨dir=⍵)[(pos⌷⍵⊃wordids)=⍵⊃padded]}¨dirs
-    ,⌿↑arrows lists
-}
-
-Puzzle←{
-    grid←Grid⍬
-    text←'Across' 'Down'{⍵⍪⍨⍺↑⍨≢⍉⍵}¨⌽Text⍬
-    height←⌈/≢¨(⊂grid),text
-    ⊃,/height↑¨(⊂grid),' ',¨text
-}
 
 stdin ←'/dev/stdin' ⎕NTIE 0
 stdout←'/dev/stdout'⎕NTIE 0
@@ -132,12 +108,28 @@ mode←0 ⍝ normal insert
 dir ←1 ⍝ down   across
 pos←⊃chars
 
+Render←{
+    shape←⍴light←Light⍴ans ⍝ can technically be precomputed
+    word←words⊃⍨pos⌷dir⊃wordids
+    dy dx←-⊃word
+    heavy←dy⊖dx⌽shape↑Heavy dir⌽1,⍨≢word
+    vertex←(light,¨heavy)⌷¨⊂box
+    edgex←heavy{3↑(3⍴'─━'⊃⍨2|⍺),⍨(0∘=↓⍕)⍵}¨shape↑nos
+    edgey←'│┃'[heavy∊1 2 6]
+    face←shape↑white{~⍺:3⍴'░' ⋄ ' '⍵' '}¨ans
+    grid←¯1 ¯3↓⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
+    arrows←{(' ','->'⊃⍨dir=⍵)[(pos⌷⍵⊃wordids)=⍵⊃padded]}¨dirs
+    text←'Across' 'Down'{⍵⍪⍨⍺↑⍨≢⍉⍵}¨⌽,⌿↑arrows lists
+    height←⌈/≢¨(⊂grid),text
+    ⊃,/height↑¨(⊂grid),' ',¨text
+}
+
 Set←{⍵∊' ',⎕C⎕A:(pos⌷ans)⊢←1⎕C⍵}
 
 :Repeat
     out ←clear
     out,←Cursor 0 0
-    out,←,lf,⍨cr,⍨Puzzle⍬
+    out,←,lf,⍨cr,⍨Render⍬
     out,←Cursor 1 2+2 4×pos
     Write out
     char←Read⍬
