@@ -137,7 +137,7 @@ Set←{⍵∊' ',⎕C⎕A:(pos⌷ans)⊢←1⎕C⍵}
 :Repeat
     out ←clear
     out,←Cursor 0 0
-    out,←,lf,⍨cr,⍨Puzzle dir pos ans
+    out,←,lf,⍨cr,⍨Puzzle⍬
     out,←Cursor 1 2+2 4×pos
     Write out
     char←Read⍬
