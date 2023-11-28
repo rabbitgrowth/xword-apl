@@ -17,39 +17,34 @@ argv←2⎕NQ#'GetCommandLineArgs'
 file←1⊃argv
 tie←file⎕NTIE 0
 data←⎕NREAD tie 83 ¯1
+⎕NUNTIE tie
 shape ←2,  data[44+⍳2]
 nclues←16⊥⌽data[46+⍳2]
 bound←×/shape
 sol ans←⊂⍤2⊢shape⍴' '@(∊∘'.-')Decode data[52+⍳bound]
 strings←{¯1↓¨⍵⊂⍨¯1⌽nul=⍵}     Decode data↓⍨52+bound
-clues←¯1↓3↓strings
-⎕NUNTIE tie
+cluestr←¯1↓3↓strings
 
-Count←{⍵×(⍴⍵)⍴+\,⍵}
+dirs←⍳2
+Count←⊢×⍴⍴+\⍤,
 white←' '≠sol
-headx←2</0,white
-heady←2<⌿0⍪white
-num←Count headx∨heady
-numx←headx/⍥,num
-numy←heady/⍥,num
-nwhite←+/, white
-nblack←+/,~white
-nwordx←+/, headx
-nwordy←+/, heady
-iwordx←       ⍳nwordx
-iwordy←nwordx+⍳nwordy
-wordx←¯1+white×       ⌈\Count headx
-wordy←¯1+white×nwordx+⌈⍀Count heady
-groups←⊃,/{k v←↓⍉⍵,⍥⊂⌸⍥,⍳⍴⍵ ⋄ v/⍨k≥0}¨wordx wordy
-squarex←¯1+Count white
-squarey←¯1+white×1+nwhite+nblack-⍨{(⍴⍵)⍴⍋⍋,⍵}wordy
-points←(⍸white),{nblack↓(,⍳⍴⍵)[⍋,⍵]}squarey
+nblack nwhite←+/0 1∘.=,white
+heads←{2</[⍵]0,[⍵]white}¨dirs
+nwords←+/⍤,¨heads
+nos←Count⊃∨/heads
+listnos←heads/⍥,¨⊂nos
+listids←(1⊃nwords)0+⍳¨nwords
+wordids←dirs{¯1+white×⌈\[⍺]⍵}¨⊂⍤2⊖Count⊖↑heads
+charidy←¯1+white×1+nwhite+nblack-⍨(⍴⍴⍋⍤⍋⍤,)⊃wordids
+charidx←¯1+Count white
+charids←charidy charidx
+words←⊃,/⌽listids(⍸¨=∘⊂)¨wordids
+chars←⊃,/words
 
-nums←{⍵[⍋⍵]}numx,numy
-icluex←nums⍳numx
-icluey←icluex~⍨⍳≢nums
-cluex←clues[icluex]
-cluey←clues[icluey]
+sorted←{⍵[⍋⍵]}∊listnos
+icluex←sorted⍳1⊃listnos
+icluey←icluex~⍨⍳≢sorted
+clues←{cluestr[⍵]}¨icluey icluex
 
 Move←{3::⍵ ⋄ ⍺+⍣{⍺⌷white}⍵}
 H← 0 ¯1∘Move
@@ -66,18 +61,17 @@ G     ←{y x←⍵ ⋄ y+←⍵⌷g      ⋄ y x}
 Zero  ←{y x←⍵ ⋄ x+←⍵⌷zero   ⋄ y x}
 Dollar←{y x←⍵ ⋄ x+←⍵⌷dollar ⋄ y x}
 
-Word  ←{dir pos←⍵ ⋄ pos⌷dir⊃wordx wordy}
-Square←{dir pos←⍵ ⋄ pos⌷dir⊃squarex squarey}
-Nav←(≢points)|+
+CharID←{dir pos←⍵ ⋄ pos⌷dir⊃charids}
+Nav←(≢chars)|+
 Next← 1∘Nav
 Prev←¯1∘Nav
-Point←{(⍵≥nwhite)(⍵⊃points)}
+Char←<∘nwhite,∘⊂⊃∘chars
 
-w ←∊{⌽1+⍳≢⍵}¨groups
-ge←∊{-1+⍳≢⍵}¨groups
+w ←∊(⌽1+⍳⍤≢)¨words
+ge←∊(-1+⍳⍤≢)¨words
 e ← 1⌽w
 b ←¯1⌽ge
-Jump←{Point(⊃∘⍺Nav⊢)Square⍵}
+Jump←{Char(⊃∘⍺Nav⊢)CharID⍵}
 W ←w ∘Jump
 GE←ge∘Jump
 E ←e ∘Jump
@@ -98,39 +92,39 @@ box⍪← '┘   ┛  '
 Rect←{y x←⍵-1 ⋄ 1 y 1⌿1 x 1/3 3⍴⍺}
 Light←(⍳9)             ∘Rect
 Heavy←1 5 2 6 0 6 3 5 4∘Rect
+
 Grid←{
-    dir pos ans←⍵
-    shape←⍴light←Light⍴ans
-    group←groups⊃⍨Word dir pos
-    dy dx←-⊃group
-    heavy←dy⊖dx⌽shape↑Heavy dir⌽1,≢group
+    shape←⍴light←Light⍴ans ⍝ can technically be precomputed
+    word←words⊃⍨pos⌷dir⊃wordids
+    dy dx←-⊃word
+    heavy←dy⊖dx⌽shape↑Heavy dir⌽1,⍨≢word
     vertex←(light,¨heavy)⌷¨⊂box
-    edgex←heavy{3↑(3⍴'─━'[2|⍺]),⍨(0=⍵)↓⍕⍵}¨shape↑num
+    edgex←heavy{3↑(3⍴'─━'⊃⍨2|⍺),⍨(0∘=↓⍕)⍵}¨shape↑nos
     edgey←'│┃'[heavy∊1 2 6]
-    face←shape↑white{⍺⊃(3⍴'░')(' '⍵' ')}¨ans
+    face←shape↑white{~⍺:3⍴'░' ⋄ ' '⍵' '}¨ans
     ¯1 ¯3↓⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
 }
 
 Wrap←{
     ⍺≥⍴⍵:⍉⍪⍺↑⍵
     take←⊃⌽⍺,⍸' '=(⍺+1)↑⍵
-    drop←take+' '=⍵[take]
+    drop←take+' '=take⊃⍵
     (⍉⍪⍺↑take↑⍵)⍪⍺∇drop↓⍵
 }
-wrapx wrapy←25 Wrap¨¨cluex cluey
-List←{(⊃⍪/(≢¨⍵)↑¨{⍉⍪2 0⍕⍵}¨⍺),' ',⊃⍪/⍵}
-listx listy←numx numy List¨wrapx wrapy
+
+boxes←25 Wrap¨¨clues
+heights←≢¨¨boxes
+lists←{(⊃⍪/(⍵⊃heights)↑∘(⍉⍤⍪¯2↑⍕)¨⍵⊃listnos),' ',⊃⍪/⍵⊃boxes}¨dirs
+padded←¯1+heights(∊↑¨)¨1+listids
+
 Text←{
-    dir pos←⍵
-    words←Word¨((⊢,~)dir),¨⊂⊂pos
-    Arrow←{∊(≢¨⍵)↑¨'>- '[⍺⍳¨⍨⊂words]}
-    arrowx arrowy←iwordx iwordy Arrow¨wrapx wrapy
-    (arrowx,listx)(arrowy,listy)
+    arrows←{(' ','->'⊃⍨dir=⍵)[(pos⌷⍵⊃wordids)=⍵⊃padded]}¨dirs
+    ,⌿↑arrows lists
 }
 
 Puzzle←{
-    grid←Grid⍵
-    text←'Across' 'Down'{⍵⍪⍨⍺↑⍨≢⍉⍵}¨Text¯1↓⍵
+    grid←Grid⍬
+    text←'Across' 'Down'{⍵⍪⍨⍺↑⍨≢⍉⍵}¨⌽Text⍬
     height←⌈/≢¨(⊂grid),text
     ⊃,/height↑¨(⊂grid),' ',¨text
 }
@@ -147,8 +141,8 @@ ibeam    ←esc,'[5 q'
 underline←esc,'[3 q'
 
 mode←0 ⍝ normal insert
-dir ←0 ⍝ across down
-pos←⊃points
+dir ←1 ⍝ down   across
+pos←⊃chars
 
 Set←{⍵∊' ',⎕C⎕A:(pos⌷ans)⊢←1⎕C⍵}
 
@@ -193,7 +187,7 @@ Set←{⍵∊' ',⎕C⎕A:(pos⌷ans)⊢←1⎕C⍵}
             Write block
         :Else
             Set char
-            dir pos←Point Next Square dir pos
+            dir pos←Char Next CharID dir pos
         :EndSelect
     :EndIf
 :EndRepeat
