@@ -108,8 +108,8 @@ mode←0 ⍝ normal insert
 dir ←1 ⍝ down   across
 pos←⊃chars
 
+shape←⍴light←Light⍴ans
 Render←{
-    shape←⍴light←Light⍴ans ⍝ can technically be precomputed
     word←words⊃⍨pos⌷dir⊃wordids
     dy dx←-⊃word
     heavy←dy⊖dx⌽shape↑Heavy dir⌽1,⍨≢word
