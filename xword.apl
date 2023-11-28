@@ -67,8 +67,6 @@ GE←ge∘Jump
 E ←e ∘Jump
 B ←b ∘Jump
 
-⍝      0123456
-⍝       ┏┓┗┛━┃
 box←⍉⍪'┌┏     '
 box⍪← '┬┲┱  ┯ '
 box⍪← '┐ ┓    '
