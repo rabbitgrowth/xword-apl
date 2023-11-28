@@ -119,9 +119,9 @@ Render←{
     face←shape↑white{~⍺:3⍴'░' ⋄ ' '⍵' '}¨ans
     grid←¯1 ¯3↓⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
     arrows←{(' ','->'⊃⍨dir=⍵)[(pos⌷⍵⊃wordids)=⍵⊃padded]}¨dirs
-    text←'Across' 'Down'{⍵⍪⍨⍺↑⍨≢⍉⍵}¨⌽,⌿↑arrows lists
-    height←⌈/≢¨(⊂grid),text
-    ⊃,/height↑¨(⊂grid),' ',¨text
+    texts←'Across' 'Down'{⍵⍪⍨⍺↑⍨≢⍉⍵}¨⌽,⌿↑arrows lists
+    height←⌈/≢¨(⊂grid),texts
+    ⊃,/height↑¨(⊂grid),' ',¨texts
 }
 
 Set←{⍵∊' ',⎕C⎕A:(pos⌷ans)⊢←1⎕C⍵}
