@@ -105,7 +105,7 @@ ibeam    ←esc,'[5 q'
 underline←esc,'[3 q'
 
 mode←0 ⍝ normal insert
-dir ←1 ⍝ down   across
+dir ←1 ⍝ down across
 pos←⊃chars
 
 shape←⍴light←Light⍴ans
