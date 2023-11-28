@@ -119,7 +119,7 @@ Render←{
     face←shape↑white{~⍺:3⍴'░' ⋄ ' '⍵' '}¨ans
     grid←¯1 ¯3↓⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
     arrows←{(' ','->'⊃⍨dir=⍵)[(pos⌷⍵⊃wordids)=⍵⊃padded]}¨dirs
-    texts←'Across' 'Down'{⍵⍪⍨⍺↑⍨≢⍉⍵}¨⌽,⌿↑arrows lists
+    texts←'Across' 'Down'{⍵⍪⍨⍺↑⍨≢⍉⍵}¨,⌿⌽↑arrows lists
     height←⌈/≢¨(⊂grid),texts
     ⊃,/height↑¨(⊂grid),' ',¨texts
 }
