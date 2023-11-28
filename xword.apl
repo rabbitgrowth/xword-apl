@@ -120,8 +120,7 @@ Render←{
     grid←¯1 ¯3↓⊃⍪⌿,/(vertex,¨edgex),[¯0.5]¨edgey,¨face
     arrows←{(' ','->'⊃⍨dir=⍵)[(pos⌷⍵⊃wordids)=⍵⊃padded]}¨dirs
     texts←'Across' 'Down'{⍵⍪⍨⍺↑⍨≢⍉⍵}¨,⌿⌽↑arrows lists
-    height←⌈/≢¨(⊂grid),texts
-    ⊃,/height↑¨(⊂grid),' ',¨texts
+    ⍉↑⊃,/↓⍤⍉¨(⊂grid),' ',¨texts
 }
 
 Set←{⍵∊' ',⎕C⎕A:(pos⌷ans)⊢←1⎕C⍵}
