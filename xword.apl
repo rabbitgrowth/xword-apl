@@ -2,16 +2,6 @@
 
 nul lf cr esc←⎕UCS 0 10 13 27
 
-⍝ ISO-8859-1
-cp ←⎕UCS⍳128
-cp,←32⍴''              ⍝ undefined
-cp,←' ¡¢£¤¥¦§¨©ª«¬-®¯' ⍝ nbsp→space shy→hyphen
-cp,←'°±²³´µ¶·¸¹º»¼½¾¿'
-cp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏ'
-cp,←'ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß'
-cp,←'àáâãäåæçèéêëìíîï'
-cp,←'ðñòóôõö÷øùúûüýþÿ'
-
 argv←2⎕NQ#'GetCommandLineArgs'
 file←1⊃argv
 tie←file⎕NTIE 0
@@ -20,7 +10,7 @@ data←256|⎕NREAD tie 83 ¯1
 shape ←2,  data[44+⍳2]
 nclues←16⊥⌽data[46+⍳2]
 bound←×/shape
-body←cp[52↓data]
+body←⎕UCS 52↓data
 sol ans←⊂⍤2⊢shape⍴' '@(∊∘'.-')bound↑body
 strings←{¯1↓¨⍵⊂⍨¯1⌽nul=⍵}     bound↓body
 cluestr←¯1↓3↓strings
