@@ -11,7 +11,6 @@ cp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏ'
 cp,←'ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß'
 cp,←'àáâãäåæçèéêëìíîï'
 cp,←'ðñòóôõö÷øùúûüýþÿ'
-Decode←{cp[⍵]}
 
 argv←2⎕NQ#'GetCommandLineArgs'
 file←1⊃argv
@@ -21,7 +20,7 @@ data←256|⎕NREAD tie 83 ¯1
 shape ←2,  data[44+⍳2]
 nclues←16⊥⌽data[46+⍳2]
 bound←×/shape
-body←Decode 52↓data
+body←cp[52↓data]
 sol ans←⊂⍤2⊢shape⍴' '@(∊∘'.-')bound↑body
 strings←{¯1↓¨⍵⊂⍨¯1⌽nul=⍵}     bound↓body
 cluestr←¯1↓3↓strings
